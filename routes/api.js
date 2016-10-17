@@ -2,18 +2,18 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose')
-var salesReport = require('../models/sales.js')
+var sales = require('../models/sales.js')
 
 
 router.get('/sales', function(req, res, next) {
-    saless.find({}, function(err, result) {
+    sales.find({}, function(err, result) {
         res.json(result)
     })
 });
 
 router.post('/sales', function(req, res, next) {
   console.log(req.body);
-    let newSalesReport = new saless({
+    let newSalesReport = new sales({
       item_name: req.body.item_name,
       sales_amount: req.body.sales_amount,
       month: new Date().getMonth()+1,
@@ -38,7 +38,7 @@ router.post('/sales', function(req, res, next) {
 });
 
 router.put('/sales/:id', function(req, res, next) {
-    saless.update({
+    sales.update({
         _id: req.params.id
     }, {
       item_name: req.body.item_name,
@@ -50,7 +50,7 @@ router.put('/sales/:id', function(req, res, next) {
                 message: err
             })
         } else {
-          saless.findOne({_id: req.params.id},function(err2,result2){
+          sales.findOne({_id: req.params.id},function(err2,result2){
             res.json({
                 success: "ok",
                 message: "update is successful",
@@ -62,7 +62,7 @@ router.put('/sales/:id', function(req, res, next) {
 });
 
 router.delete('/sales/:id', function(req, res, next) {
-    saless.remove({
+    sales.remove({
         _id: req.params.id
     }, function(err, result) {
         if (err) {
@@ -70,7 +70,7 @@ router.delete('/sales/:id', function(req, res, next) {
                 message: err
             })
         } else {
-          saless.findOne({_id: req.params.id},function(err,result){})
+          sales.findOne({_id: req.params.id},function(err,result){})
             res.json({
                 success: "ok",
                 message: "delete is successful"
